@@ -20,7 +20,7 @@ for json_file in json_files:
     df = df[df['description'].str.contains('Java') | df['title'].str.contains('Java')]
     print df.shape
 
-    df = df[df['description'].str.contains('Alphaville') == False & df['description'].str.contains('Vila Olímpia') == False & df['description'].str.contains('Morumbi') == False & df['description'].str.contains('Interlagos') == False]
+    df = df[(df['description'].str.contains('Alphaville') == False) & (df['description'].str.contains('Vila Ol\xc3mpia') == False) & (df['description'].str.contains('Morumbi') == False) & (df['description'].str.contains('Interlagos') == False)]
     print df.shape
 
     df.to_sql("job_viewer_job", conn, if_exists="append", index=False)
