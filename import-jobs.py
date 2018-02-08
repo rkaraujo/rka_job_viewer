@@ -21,7 +21,6 @@ for json_file in json_files:
     print df.shape
 
     EXCLUDE_STR = ['alphaville', 'vila ol\xc3mpia', 'chacara', 'ch\xc9cara', 'morumbi', 'interlagos', 'berrini', 'faria lima', 'android', 'pmbok']
-    # Berrini, Chacara Santo Antonio, Faria Lima, PMBOK, Android
     exclude_regexp = '|'.join(EXCLUDE_STR)
     df = df[df['description'].str.contains(exclude_regexp, case=False) == False]
     print df.shape
