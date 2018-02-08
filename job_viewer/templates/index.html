@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Job Viewer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Job Viewer</h1>
+                {% if not job %}
+                <div class="alert alert-success" role="alert">
+                    Todos os jobs visualizados
+                </div>
+                {% endif %}
+                
+                {% if job %}
+                <div class="jumbotron">
+                    <h2 class="display-4">{{ job.title }}</h2>
+                    <p class="lead"><strong>{{ job.company }}</strong></p>
+                    {{ job.description|linebreaks }}
+                    <p>
+                        Data: {{ job.date|date:"d/m/Y" }}
+                        <br>
+                        Code: {{ job.code }}
+                    </p>
+                    <p>
+                        <form action="{% url 'job_viewer:next' job.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">Próximo</button>
+                        </form>
+                    </p>
+                    <p>
+                        <form action="{% url 'job_viewer:archive' job.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-default">Arquivar</button>
+                        </form>
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
