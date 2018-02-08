@@ -23,7 +23,7 @@
                 {% if job %}
                 <div class="jumbotron">
                     <h2 class="display-4">{{ job.title }}</h2>
-                    <p class="lead"><strong>{{ job.company }} ( {{ job.city }} )</strong></p>
+                    <p class="lead"><strong>{{ job.company }} ( {{ job.city }} ) <span class="badge badge-danger">Archived</span></strong></p>
                     {{ job.description|linebreaks }}
                     <p>
                         Data: {{ job.date|date:"d/m/Y" }}
@@ -31,15 +31,17 @@
                         Code: {{ job.code }}
                     </p>
                     <p>
-                        <form action="{% url 'job_viewer:delete' job.id %}" method="post">
-                            {% csrf_token %}
-                            <button class="btn btn-primary">Excluir</button>
-                        </form>
+                        {% if job_pos|add:"-1" >= 0 %}
+                            <a href="{% url 'job_viewer:show_archived' job_pos|add:-1 %}" class="btn btn-primary">Anterior</a>
+                        {% endif %}
                     </p>
                     <p>
-                        <form action="{% url 'job_viewer:archive' job.id %}" method="post">
+                        <a href="{% url 'job_viewer:show_archived' job_pos|add:1 %}" class="btn btn-primary">Próximo</a>
+                    </p>
+                    <p>
+                        <form action="{% url 'job_viewer:delete_archived' job.id job_pos %}" method="post">
                             {% csrf_token %}
-                            <button class="btn btn-default">Arquivar</button>
+                            <button class="btn btn-danger">Excluir</button>
                         </form>
                     </p>
                 </div>
